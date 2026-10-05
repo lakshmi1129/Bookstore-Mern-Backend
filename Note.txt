@@ -1,0 +1,240 @@
+                                                    MEARN
+                                                    -----
+REACT
+--------
+1. Higher Order Components(HOC) :  A HOC is a function that takes a Component and returns a new enhanced Component.
+
+    REDUX:
+    ------
+    1. Redux is a state management library used to manage and centralize application state, especially in large React applications.
+    2. Core concepts :
+        1. Store: A single source that holds the entire app states.
+        2. Action: An object that describes what happens to a state.
+        3. Reducer : A function that decides how state changes.
+        4. Dispatch : used to send actions to the Reducer
+    3. Work Flow :  User Action => dispatch => Reducer => Store updated state => UI rerender
+    4. Packages installed :
+        - React-Redux : npm install react-redux
+            - Provider :  Makes the REDUX store available to all Components in your app.
+            - useSelector Hook : used to select reducer from store to component.
+            - useDispatch Hook : used to dispatch action from component, it returns a function, it can be used to dispatch action
+        - Redux Toolkit : npm install @reduxjs/toolkit
+            - configureStore() : used to create store
+            - createReducer() : used to create reducer, updated state will be stored in reducer
+            - createAction(): used to generate action, logic to update state value
+            - createSlice(): used to combine action and its reducer together.
+    5.  To Implement Redux Logic in an existing app
+        1. Install Packages: npm install @reduxjs/toolkit react-redux
+        2.  Create a redux folder  in src
+            - Create store.js file to  hold states.
+            - Provide the store to Application.
+            -  Create slice  to handle the states and actions together.
+
+BACKEND TECHNOLOGIES
+--------------------
+
+1. Backend of a web app is the server-side part of the application that users do not directly see. It handles the logic, database operations, authentication, APIs and communication between frontend and database.
+2. Main Responsibilites:
+    - Server Logic 
+    - Database management
+    - Authentication and security
+    - API'security
+    - Bussiness Logics
+3. Popular backend Technologies: Python, Java,PHP, Javascript(Node JS)
+    - Frameworks : Express JS, NextJS, Django, Spring Boot, Laravel....
+    - Database using with backend : MySQL, MongoDB, PostgreSQL, Firebase, SQLite....
+
+
+    DATABASE
+--------------------
+1. A database is an organized collection of data stored electronically , so that it can easily access , manage and update...
+2. Types of Database:
+    - Relational Database(SQL based)
+    - NoSQL database
+3. SQL: Structured Query Language - used to interact with relational DATABASE
+    - Here data is stored in Tables
+    - Rows(Records) : one entry in table indicate one item stored in table.
+    - Column (Field): Attribute of data stored in table.
+    - Primary Key : Unique field of a table
+    - Foreign Key : used to refer in another table, it always primary key of a table.
+
+    MONGODB
+-----------------------
+    1. MongoDB is NoSQL database, document -Oriented DB,  that stores data in JSON like format (BSON) instead of tables.
+    2. Features:
+        - Schema-less( flexible Structure)
+        - Scalable
+        - Designed for Modern applications
+    3. key Features:
+        - Database : A container for collection.
+        - Collection : Equalent to table in SQL
+        - Document : A single record (JSON like object)
+        - BSON : Binary version of JSON used internally
+        - _id Field : Every document has a unique key- value
+    4. Commands general : Commands will identified only by the MongoDB Shell(MONGOSH)
+        - show dbs - display the databases in the connection
+        - use databaseName - switch the control to the database we want.
+    5. CRUD operations in MongoDB
+        - Read : To get documents from the collection.
+            - find() : used to get all documents in a database collection
+                db.collectionName.find(), If we have query find(condition) - condition always written as object 
+                    eg: find({name:"Max"})
+            - findOne({condition}) : used to get single document
+        - Create : To insert document into the collection.
+            - insertOne({document}) : used to insert one document into a collection, document can be an object.
+            - insertMany([{docu1},{doc2},.....]): used to insert multiple documents at a time into a collection.
+        - Update : To edit a document from a collection
+            - updateOne({field:{update-query:value}}) : used to update a single document
+            - updateMany() :used to update multiple documents at the sametime.
+        - Deletion : To remove document from a collection
+            - deleteOne(): used to remove single document
+            - deleteMany(): used to remove multiple document.
+    6. Query Operations :
+        - Comparisons : syntax: {field:{comparison-Query:value}} - eg: $eq,$ne,$gt,$gte,$lt,$lte,$in...
+        - Logical : syntax- {logicalquery:[{field:value1},{field2:value2}]} - eg: $and, $or,$nor, $not...
+        - Evaluation : syntax- {field:{Evaluation-query:value}} - eg: $regex,$text,$exp,$mod,$where.....
+    7. Additional Operations : count(),sort() eg: field:1 - ascending order, field:-1-decending order ,limit().....
+    8. Update Operators :
+        - Field: $inc, $set, $unset , $rename , $currentDate....
+        - Array : $pop, $push, $pull, $addToSet
+    9. Indexing :  used to make data searching faster in MongoDB.
+        - Better performance for large data.
+        - Syntax: db.collectionName.createIndex({fieldName:1})
+    10. Schema Design : stucture of collection.
+        - Embedded schema design: add entire document details
+        - Referenced Schema design : using Primary and foreign key references.
+    11. Aggregation : used to process and transform data inside db,  It is used for reports, analytics, filtering, grouping, sorting....
+        - Syntax: db.collection.aggregate([{stage1}, {stage2}....])
+        - MongoDb uses pipeline stages . $group, $sort, $project, $limit, $skip, $lookup.....
+            - $lookup : to join collection 
+                 - Syntax: db.collectionName.aggregate([
+                                {
+                                    $lookup: {
+                                      from: "Another collectionName",
+                                      localField: "field that in out collection",
+                                      foreignField: "field from the another collection related to our collection.",
+                                      as: "new field to create"
+                                    }
+                                }
+                            ])
+    12. MongoDb atlas is a cloud based database-as-a-service (DBaaS) provided by mongoDB... It allows developers to deploy, manage and scale mongodb databases on the cloud without handling server setup or maintainance.
+        - Key features : cloud holsting, Automatic scaling, Security, Backup and recovery, monitoring easy connection....
+        - Steps to use mongoDB atlas
+            - Create account on MongoDB atlas website
+            - Create Cluster 
+            - Create DB user
+            - Add IP address
+            - Get connection String.
+            - Connect in nodejs project
+
+     NODE JS
+-----------------------
+1. Node JS Core  = Runtime  + EventLoop + Async + Modules + Server + APIs
+2. Features 
+    - Fast Performance : It is using V8 Engine
+    - Asyncronous & non blocking  : File reading, API requests, Database queries.
+    - Single Threaded with Event Loop : Asyncronous functions handled smoothly, At a time only one operation withh process
+    - Scalable
+    - Huge Package EcoSystem
+    - Cross Platform
+    - Real-Time communication : often used in Socket.IO 
+    - Opensource
+    - JSON FRiently
+3. Core concepts in Node JS
+    - Runtime Environment : Nodejs allows JS to run outside the browser.
+    - Event Loop : NodeJS uses Event loop to handle multiple requests efficiently.
+    - Non- Blocking I/O : NodeJS does not wait for one task to finish  before starting another
+    - Modules : Node Js code is organized using Modules.
+        - Build-in modules : http,fs,path,os
+        - CommonJS (Require/module.exports) : used to import/Export files.
+        - HTTP servers : create server using HTTP
+        - Asyncronous programming : CallBack, promise, async/await.
+        - FileSystem : Read/Write files using fs
+        - Streams : Using to handle large files efficiently.
+        - Buffers :Temporary memory storage for binary data. used in file upload, streams, network data
+        - NPM (Node Package Manager): npm is used to install packages.
+        - Global : NodeJS global object containing built-in variables/ funtions. It can  used in node app without import/export, eg: consode, setTimeOut, process....
+        - Process : Nodejs Global object which provides information and control over the current running NodeJS Application.
+            - Environmental variable : Are secret data or configuration of an application, to hold env variables we have to create .env files, it can be accessed via process.env in node app.
+
+  CORS  - Crss Origin resource Sharing
+----------------------------------------
+1. It is a browser security feature that controls whether a frontend from one origin can access resources from another origin.
+2. Origin = protocols +domain + protocols
+3. If frontend and backend have different origin, browser may block request.
+4. To Enable cors
+    - Install cors package : npm install cors 
+    - use cors in app
+
+
+JSON WEB TOKEN
+-----------------------
+1. JWT is a secure way to authenticate users and share user data between client and server.
+2. When user logs in success :
+     - Server  creates a token using JWT
+     - Sends the token to client
+     - Client store token
+     - Client Use token for any request 
+3. JWT Structure :  It has 3 parts : Header, payload, signature.
+    - Header : Algorithm + token Types
+    - Payload : user data
+    - Signature : used to verify token is valid.
+4. Use JWT :
+    - install JWT : npm i jsonwebtoken
+    - Create Token : sign()
+    - Verify token : verify()
+
+
+
+
+   EXPRESS JS
+-----------------------
+1. Express JS is fast, minimul and flexible web framework for node.js
+2. It uses Web servers, REST APIs Backend Applications, Mern stack backends
+3. Use Express Js : Easy Routing, Middleware support, Rest API creation, fast development, works with mongoDB, Large Ecosystem.
+4. MVC Architecture of Express Server(NOde JS) :  It is a design pattern used to organize Express.js applications cleanly and Professionally.
+    - M (Model) - Handles database Logic
+    - V (View) - Handles UI/ Frontend display
+    - C (Controller) - Handles Business Logic( Receives request => Process => Sents Response)
+5.  MVC folder Structure
+     - project folder 
+            - models folder - eg: userModel.js
+            - controller folder : eg : userController.js  - resolve only user related request
+            - routes :bookStoreRoute.js
+6. Work Flow of MVC
+    user Request ->  Route -> Controller -> Model -> Database -> Controller -> View/ JSON response
+7. Install mongoose : npm i mongoose
+
+  Steps to create a Express Server
+-----------------------------------
+1. create a folder to hold all files of project
+2. Create Project configuration file using create package.json file : use command : npm init -y
+3. Update package.json file script by adding start as "node index.js", where index.js is the main entry file of project.
+4. Install packages :  cors,  express ,dotenv
+5. Create .env file to hold project secret / configuration data
+6. Create .gitignore file to add files/ folders to avoid adding to git.
+7. Create index.js file where we define express server.
+    - Import the packages/ files (express, cors, dotenv,allroutes)
+    - Create server using express package
+    - enable cors in server 
+    - use Route in server
+    - Setu a port number to run server in internet
+    - Start server to listen client request to that PORT / Available server.
+    - Resolve API (Get request to http://localhost:3000/) using Express
+        - Syntax: server.httpRequest(url,CallBack),use callback to define the logic to solve the API
+8. To run the server : use command : node index.js
+9. Create controller folder in project folder, create js file to resolve client request.
+10. Create Route Folder to hold all routes of the project, create a js file to define routes.
+    - To setUp route outside express server, create object for router class of express
+    - To set path use object of router class, syntax: routerObject.httpRequest(path,controller function)
+    - Export Router object
+11. Create config folder in server folder to define DB connection 
+    - create js file 
+        - Import mongoose
+        - get db connection string
+        - connect the db using connect method of mongoose
+12. Create model folder in server folder and create js file for each collection
+       - Import mongoose
+       - Define schema using mongoose.
+       - Create model using schema
+       - export the model
