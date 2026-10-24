@@ -30,6 +30,16 @@ REACT
             - Provide the store to Application.
             -  Create slice  to handle the states and actions together.
 
+    CONTEXT API
+ -------------------------
+ - The Context APi in react is a build in feature used to share data across Components without passing props manually at every level.
+ - Context API solves props Drilling by creating global state accessibility anywhere in the component tree.
+ - Core concepts :
+    1. createContext() - creates a context object
+    2. Provider - Wraps component and provides data
+    3. useContext() - used inside components to access context data
+- Create context --> Wrap component using provider ->Access data using useContext
+
 BACKEND TECHNOLOGIES
 --------------------
 
@@ -156,8 +166,23 @@ BACKEND TECHNOLOGIES
         - Global : NodeJS global object containing built-in variables/ funtions. It can  used in node app without import/export, eg: consode, setTimeOut, process....
         - Process : Nodejs Global object which provides information and control over the current running NodeJS Application.
             - Environmental variable : Are secret data or configuration of an application, to hold env variables we have to create .env files, it can be accessed via process.env in node app.
+4. Authentication and Authorization
+    - Authentication is a process of verifying the identity of a user.
+    - Authorization : Means checking what permissions a user have after login. Performed using JWT (JSON WEB TOKEN)
+5. Middleware : Fuction that run between request and response cycle
+    - Passes the control to the next middleware/controller
+    - Sends a response directly.
+    - Handle errors
+    - Types of middleware :
+        - Application Specific middleware : Active for entire app
+        - Route Specific Middleware : Only active for certain routes.
+    - Create Middleware : create a function with minimum 3 arguments.(req,res.next)
 
-  CORS  - Crss Origin resource Sharing
+
+
+
+
+  CORS  - Cross Origin resource Sharing
 ----------------------------------------
 1. It is a browser security feature that controls whether a frontend from one origin can access resources from another origin.
 2. Origin = protocols +domain + protocols
@@ -204,13 +229,14 @@ JSON WEB TOKEN
 6. Work Flow of MVC
     user Request ->  Route -> Controller -> Model -> Database -> Controller -> View/ JSON response
 7. Install mongoose : npm i mongoose
+8. Static file enabling using Express server : express.static() middleware
 
   Steps to create a Express Server
 -----------------------------------
 1. create a folder to hold all files of project
 2. Create Project configuration file using create package.json file : use command : npm init -y
 3. Update package.json file script by adding start as "node index.js", where index.js is the main entry file of project.
-4. Install packages :  cors,  express ,dotenv
+4. Install packages :  cors,  express ,dotenv,mongoose,jsonwebtoken, multer
 5. Create .env file to hold project secret / configuration data
 6. Create .gitignore file to add files/ folders to avoid adding to git.
 7. Create index.js file where we define express server.
@@ -238,3 +264,19 @@ JSON WEB TOKEN
        - Define schema using mongoose.
        - Create model using schema
        - export the model
+
+  MULTER
+-----------------------
+1. Multer is a node.js middleware for handling multipart/form-data
+2. To use multer : npm i multer
+3. Multer will not process any form which is not multipart
+4. Uses of multer
+    - Multer adds a body object and a file or files object to the request object. 
+    - The body object contains the values of the text fields of the form
+    - The file or files object contains the files uploaded via the form.
+    - Define storage for uploaded files
+    - It can apply filters
+5. We can apply multer middleware as router Specific
+6. Methods in multer    
+    - single(fieldName) : used to handle single uploaded file
+    - array(fieldName) : used to handle multiple uploaded file
