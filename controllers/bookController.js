@@ -1,4 +1,6 @@
 const books = require('../models/bookModel')
+const stripe = require('stripe')(process.env.STRIPE_SK);
+
 
 // add book
 exports.addBookController = async(req,res)=>{
@@ -76,7 +78,59 @@ exports.viewBookController = async(req,res)=>{
 
 
 // get all books : admin page
+exports.getAllBookController = async(req,res)=>{
+    console.log("getAllBookController");
+    const allBooks = await books.find()
+    res.status(200).json(allBooks)
+}
 
 // update book status: admin page
+exports.updateBookStatusController = async(req,res)=>{
+    console.log("updateBookStatusController");
+    const {id} = req.params
+    const booksDetails = await books.findById({_id:id})
+    booksDetails.status ="approved"
+    await booksDetails.save()
+    res.status(200).json(booksDetails)
+}
 
 // book payment
+exports.bookPaymentController = async (req,res)=>{
+    console.log("Inside bookPaymentController");
+    const buyerMail = req.payload
+    const {id} = req.params
+    console.log(buyerMail, id);
+    
+    const bookDetails = await books.findById({_id:id})
+    bookDetails.status = "sold"
+    bookDetails.buyerMail = buyerMail
+    await bookDetails.save()
+    console.log(bookDetails.uploadImages);
+    
+    // CREATE STRIPE CHECKOUT SESSION
+    const line_items =[{
+        price_data : {
+            currency : "usd",
+            product_data : {
+                name : bookDetails.title,
+                description : `${bookDetails.author}, ${bookDetails.publisher}`,
+                //  images : bookDetails.uploadImages,
+                metadata : {
+                    title:bookDetails.title, author:bookDetails.author, price:bookDetails.discountPrice
+                }
+            },
+             unit_amount: Math.round(bookDetails.discountPrice) * 100
+        },
+        quantity:1
+    }]
+    
+    const session = await stripe.checkout.sessions.create({
+        success_url : "http://localhost:5173/success",
+        cancel_url: "http://localhost:5173/failed",
+        line_items,
+        mode: 'payment',
+        allowed_payment_method_types :['card'],
+    })
+    console.log(session);
+    res.status(200).json({chekOutURL:session.url})
+}

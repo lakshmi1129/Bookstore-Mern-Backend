@@ -4,6 +4,7 @@ const bookController = require('../controllers/bookController')
 
 const authMiddleware = require("../middlewares/authMiddleware")
 const multerMiddleware = require("../middlewares/multerMiddleware")
+const adminMiddleware = require("../middlewares/adminMiddleware")
 
 // object for router class in express
 const router = new express.Router()
@@ -47,6 +48,28 @@ router.delete('/book/:id',authMiddleware,bookController.deleteUploadBooksControl
 
 // get view book
 router.get('/view-book/:id',authMiddleware,bookController.viewBookController)
+
+
+// book payment
+router.put('/books/:id/buy',authMiddleware,bookController.bookPaymentController)
+
+
+// -------------------------------AUTHORIZED ACCESS : ADMIN----------------------------------------------------
+
+// edit admin 
+router.put('/admin/:id',adminMiddleware,multerMiddleware.single('picture'), userController.userEditController)
+
+// get all users  
+router.get('/user-list',adminMiddleware,userController.getAllUsersController)
+
+
+// get all Books  
+router.get('/book-list',adminMiddleware,bookController.getAllBooksController)
+
+// Update Books status 
+router.put('/book/:id',adminMiddleware,bookController.updateBookStatusController)
+
+
 
 
 module.exports = router

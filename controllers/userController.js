@@ -62,9 +62,9 @@ exports.googleLoginController =async (req,res)=>{
     }
 }
 
-// user edit
+// user/admin edit
 exports.userEditController = async(req,res)=>{
-    console.log("Inside userEditController");
+    console.log("Inside user/adminEditController");
     const {id} = req.params
     const email = req.payload
     const {username,password, bio,picture,role} = req.body
@@ -72,6 +72,14 @@ exports.userEditController = async(req,res)=>{
     const uploadedPicture = req.file?req.file.filename:picture
     const updatedUser = await users.findOneAndUpdate({_id:id},{username,email,password:encryptedPassword,picture:uploadedPicture,bio,role},{new:true})
     res.status(200).json(updatedUser)
+}
+
+// get all users
+exports.getAllUsersController = async(req,res)=>{
+    console.log("Inside getAllUsersController");
+    const email = req.payload
+    const allUsers = await users.find({email:{$ne:email}})
+    res.status(200).json(allUsers)
 }
 
 
