@@ -280,3 +280,13 @@ JSON WEB TOKEN
 6. Methods in multer    
     - single(fieldName) : used to handle single uploaded file
     - array(fieldName) : used to handle multiple uploaded file
+
+
+    
+GEMINI API SETUP
+-----------------------
+1. Steps to set api key 
+    - Go to aiStudio google
+    - Login with email
+    - Click on API KEY
+    - Create KEy.

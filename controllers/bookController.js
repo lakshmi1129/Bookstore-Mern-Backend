@@ -1,5 +1,6 @@
 const books = require('../models/bookModel')
 const stripe = require('stripe')(process.env.STRIPE_SK);
+const {GoogleGenerativeAI} = require('@google/generative-ai')
 
 
 // add book
@@ -133,4 +134,42 @@ exports.bookPaymentController = async (req,res)=>{
     })
     console.log(session);
     res.status(200).json({chekOutURL:session.url})
+}
+
+// get book Abstract using Gemini API
+exports.generateAbstractAIController = async (req,res)=>{
+    console.log("Inside generateAbstractAIController");
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API)
+    const {title} = req.body
+    const model = genAI.getGenerativeModel({
+        model:"gemini-3.5-flash-lite"
+    })
+    const result = await model.generateContent(`Give me a short Abstract,isbn, author name of the book ${title} in json format`)
+    let replay = result.response.candidates[0].content.parts[0].text;
+
+    // Remove markdown code fences
+    replay = replay.replace(/```json|```/g, "").trim();
+
+    // Convert string into JSON
+    const bookData = JSON.parse(replay);
+    console.log(bookData);
+    
+
+    // Extract abstract
+    const abstract = bookData.abstract;
+    const author = bookData.author;
+    const isbn = bookData.isbn;
+
+    res.status(200).json({
+        success: true,
+        user: title,
+        content: {abstract,author,isbn}
+    });
+    // const replay = result.response
+    // console.log(replay);
+    // res.status(200).json({
+    //     success:true,
+    //     user:title,
+    //     content : replay.candidates[0].content.parts[0].text
+    // })
 }
